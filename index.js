@@ -11,29 +11,56 @@ const getOutput = (command) => {
   });
 };
 
-app.get("/neofetch", async (req, res) => {
-  const response = await getOutput("neofetch");
-  res.send(response);
-});
-
 app.get("/", async (req, res) => {
+  const response = (
+    await getOutput(
+      'neofetch --stdout --cpu_temp C --disk_show / --disk_percent on --disk_subtitle name --separator "%sep%"'
+    )
+  )
+    .split("\n")
+    .slice(2)
+    .map((entry) => {
+      const [key, value] = entry.split("%sep%");
+      return !key
+        ? ""
+        : `<div class='entry'><span>${key}</span><span>${
+            value || ""
+          }</span></div>`;
+    })
+    .join("")
+    .trim();
+
   res.send(`
-    <!doctype html>
     <html>
-      <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.0.0/css/xterm.css" />
-        <script src="https://cdn.jsdelivr.net/npm/xterm@5.0.0/lib/xterm.min.js"></script>
-      </head>
-      <body>
-        <div id="terminal"></div>
-        <script>
-          fetch('/neofetch').then(v => v.text()).then(v => {
-            var term = new Terminal();
-            term.open(document.getElementById('terminal'));
-            term.write(v);
-          });
-        </script>
-      </body>
+    <head>
+    <style>
+      html, body {
+        display: flex;
+        flex-direction: column;
+        background-color: #212126;
+        color: #eee;
+        font-family: sans-serif;
+      }
+      body {
+        margin-left: auto;
+        margin-right: auto;
+        gap: 8px;
+      }
+      .entry {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+      }
+      .entry > span:nth-child(1) {
+        background-color: #222bc7;
+        padding: 4px;
+        width: 128px;
+      }
+    </style>
+    </head>
+    <body>
+    ${response}
+    </body>
     </html>
   `);
 });
