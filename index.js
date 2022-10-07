@@ -11,6 +11,11 @@ const getOutput = (command) => {
   });
 };
 
+app.get("/sensors", async (req, res) => {
+  const response = await getOutput("sensors");
+  res.send(response);
+});
+
 app.get("/", async (req, res) => {
   const response = (
     await getOutput(
