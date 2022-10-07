@@ -50,6 +50,7 @@ app.get("/", async (req, res) => {
         display: flex;
         flex-direction: row;
         gap: 8px;
+        align-items: center;
       }
       .entry > span:nth-child(1) {
         background-color: #222bc7;
