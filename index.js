@@ -17,13 +17,9 @@ app.get("/sensors", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  const response = (
-    await getOutput(
-      'neofetch --stdout --cpu_temp C --disk_show / --disk_percent on --disk_subtitle name --separator "%sep%"'
-    )
-  )
+  const response = (await getOutput("screenfetch -Nn"))
     .split("\n")
-    .slice(2)
+    .slice(1)
     .map((entry) => {
       const [key, value] = entry.split("%sep%");
       return !key
