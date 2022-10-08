@@ -21,7 +21,7 @@ app.get("/", async (req, res) => {
     .split("\n")
     .slice(1)
     .map((entry) => {
-      const [key, value] = entry.split("%sep%");
+      const [key, value] = entry.split(":");
       return !key
         ? ""
         : `<div class='entry'><span>${key}</span><span>${
