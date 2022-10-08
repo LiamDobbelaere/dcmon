@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "node-tcp-proxy": "^0.0.28"
+    "node-tcp-proxy": "^0.0.28",
+    "tree-kill": "^1.2.2"
   }
 }
