@@ -22,3 +22,5 @@ const mcProxy = proxy.createProxy(25565, "localhost", 25566, {
     return data;
   },
 });
+
+console.log("MCProxy running!");
